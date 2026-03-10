@@ -16,10 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('location');
-            $table->string('connector_type');
             $table->string('power_kw');
             $table->string('status');
-            $table->foreignId('connector_id ')->constrained('connectors')->onDelete('cascade');
+            $table->foreignId('connector_id')->constrained('connectors')->onDelete('cascade');
             $table->timestamps();
         });
     }
