@@ -38,15 +38,15 @@ class AuthController extends Controller
 
     public function register(Request $request){
         $request->validate([
-            'nom' => 'required|string|max:255',
-            'regemail' => 'required|string|email|max:255|unique:users,email',
-            'regPassword' => 'required|string|min:6|confirmed',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
-            'name' => $request->nom,
-            'email' => $request->regemail,
-            'password'=> Hash::make($request->regPassword),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password'=> Hash::make($request->password),
         ]);
 
         $token = $user->createToken('api-token')->plainTextToken;
@@ -55,6 +55,15 @@ class AuthController extends Controller
             'message'=>'User registered successfully',
             'user'=>$user,
             'token'=>$token
+        ]);
+    }
+
+    public function logout(Request $request){
+        
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message'=>'Logged out'
         ]);
     }
 }
