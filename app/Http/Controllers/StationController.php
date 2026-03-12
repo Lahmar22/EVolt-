@@ -14,7 +14,7 @@ class StationController extends Controller
      */
     public function index()
     {
-        $station = Station::all();
+        $station = Station::with('connector')->get();
 
         return $station;
     }
@@ -29,7 +29,6 @@ class StationController extends Controller
             'location' => $request->location,
             'power_kw' => $request->power_kw,
             'status' => $request->status,
-            'connector_id' => $request->connector_id,
         ]);
 
         return response()->json([
