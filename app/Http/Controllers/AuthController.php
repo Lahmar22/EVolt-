@@ -55,7 +55,7 @@ class AuthController extends Controller
             'message'=>'User registered successfully',
             'user'=>$user,
             'token'=>$token
-        ]);
+        ], 201);
     }
 
     public function logout(Request $request){
