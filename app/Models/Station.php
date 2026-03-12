@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Connector;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,16 @@ class Station extends Model
         'name',
         'location',
         'power_kw',
-        'status',
-        'connector_id',
+        'status'
     ];
+
+    public function connector(){
+        return $this->hasMany(Connector::class);
+    }
+
+    public function reservation(){
+        return $this->hasMany(Reservation::class);
+    }
+
+
 }
