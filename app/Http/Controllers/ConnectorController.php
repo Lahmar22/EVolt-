@@ -25,6 +25,7 @@ class ConnectorController extends Controller
         $connector = Connector::create([
             'name' => $request->name,
             'description' => $request->description,
+            'station_id' => $request->station_id,
 
         ]);
 
