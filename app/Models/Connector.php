@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Station;
 
 class Connector extends Model
 {
@@ -13,5 +14,11 @@ class Connector extends Model
     protected $fillable = [
         'name',
         'description',
+        'station_id'    
     ];
+
+    public function station()
+    {
+        return $this->belongsTo(Station::class);
+    }
 }
