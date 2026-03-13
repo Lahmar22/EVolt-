@@ -14,9 +14,13 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::with(['user', 'station'])->get();  
+        $reservations = Reservation::with(['user', 'station'])->get();
+        $MyReservations = Reservation::with(['user', 'station'])->where('user_id', auth()->id())->get();
 
-        return $reservations;
+        return response()->json([
+            'reservations' => $reservations,
+            'MyReservations' => $MyReservations
+        ]);
     }
 
     /**
@@ -50,7 +54,15 @@ class ReservationController extends Controller
      */
     public function update(UpdateReservationRequest $request, Reservation $reservation)
     {
-        
+        $reservation->start_time = $request->start_time;
+        $reservation->duration_minutes = $request->duration_minutes;
+        $reservation->status = $request->status;
+        $updateReservation = $reservation->save();
+
+        return response()->json([
+            "message" => "update successfully",
+            "station" => $updateReservation
+        ]);
     }
 
     /**
