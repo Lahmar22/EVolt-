@@ -10,10 +10,15 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',[AuthController::class,'logout']);
-    Route::get('/user', [DashboardController::class, 'index']);
-    Route::apiResource('connector', ConnectorController::class);
-    Route::apiResource('station', StationController::class);
+    Route::apiResource('user', DashboardController::class);
+    Route::get('/stations', [StationController::class, 'index']);
+    
     Route::apiResource('reservation', ReservationController::class);
 });
 
-Route::apiResource('user', DashboardController::class);
+Route::middleware('auth:sanctum', 'admin')->group(function () {
+    Route::apiResource('connector', ConnectorController::class);
+    Route::apiResource('station', StationController::class);
+});
+
+
